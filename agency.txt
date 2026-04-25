@@ -1,0 +1,8 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_fare_url
+205330000000001393,Dalatrafik,https://www.dalatrafik.se/,Europe/Stockholm,sv,https://www.dalatrafik.se/
+205330000011867868,Dalatrafik Kundtjänst,https://www.resrobot.se/,Europe/Stockholm,sv,
+205330000086075251,Länstrafiken Jämtland,https://www.resrobot.se/,Europe/Stockholm,sv,
+205330000086075273,Länstrafiken Örebro,https://www.resrobot.se/,Europe/Stockholm,sv,
+205330000086075295,VL,https://www.resrobot.se/,Europe/Stockholm,sv,
+205330000086075329,X-trafik,https://www.resrobot.se/,Europe/Stockholm,sv,
+205330000086075351,Värmlandstrafiken AB,https://www.resrobot.se/,Europe/Stockholm,sv,
