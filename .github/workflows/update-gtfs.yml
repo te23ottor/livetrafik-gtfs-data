@@ -12,6 +12,9 @@ jobs:
       - name: Download and extract
         run: |
           curl -o dt.zip "https://opendata.samtrafiken.se/gtfs/dt/dt.zip?key=${{ secrets.GTFS_KEY }}"
+          file dt.zip
+          cat dt.zip
+          echo "---"
           unzip -o dt.zip trips.txt routes.txt
           rm dt.zip
       - name: Commit if changed
