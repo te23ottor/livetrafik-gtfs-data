@@ -11,10 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download and extract
         run: |
-          curl -o dt.zip "https://opendata.samtrafiken.se/gtfs/dt/dt.zip?key=${{ secrets.GTFS_KEY }}"
-          file dt.zip
-          cat dt.zip
-          echo "---"
+          curl -H "Accept-Encoding: gzip" -o dt.zip "https://opendata.samtrafiken.se/gtfs/dt/dt.zip?key=${{ secrets.GTFS_KEY }}"
           unzip -o dt.zip trips.txt routes.txt
           rm dt.zip
       - name: Commit if changed
