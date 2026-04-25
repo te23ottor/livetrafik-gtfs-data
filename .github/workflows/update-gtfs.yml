@@ -1,7 +1,7 @@
 name: Update GTFS
 on:
   schedule:
-    - cron: '0 6 * * *' # varje dag kl 08:00
+    - cron: '0 6 * * *' # varje dag kl 08:00 svensk tid
   workflow_dispatch: 
 
 jobs:
@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download and extract
+      - name: Ladda ner statisk-zip
         run: |
           curl -H "Accept-Encoding: gzip" -o dt.zip "https://opendata.samtrafiken.se/gtfs/dt/dt.zip?key=${{ secrets.GTFS_KEY }}"
-          unzip -o dt.zip trips.txt routes.txt
+          unzip -o dt.zip
           rm dt.zip
       - name: Commit if changed
         run: |
