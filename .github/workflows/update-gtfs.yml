@@ -14,6 +14,29 @@ jobs:
           curl -H "Accept-Encoding: gzip" -o dt.zip "https://opendata.samtrafiken.se/gtfs/dt/dt.zip?key=${{ secrets.GTFS_KEY }}"
           unzip -o dt.zip
           rm dt.zip
+      - name: Generera shapes.json.gz
+        run: |
+          pip install polyline
+          python3 << 'EOF'
+          import csv, json, gzip, polyline
+      
+          shapes = {}
+          with open("shapes.txt") as f:
+              for row in csv.DictReader(f):
+                  sid = row["shape_id"]
+                  if sid not in shapes:
+                      shapes[sid] = []
+                  shapes[sid].append((float(row["shape_pt_lat"]), float(row["shape_pt_lon"])))
+      
+          encoded = {sid: polyline.encode(coords) for sid, coords in shapes.items()}
+      
+          with gzip.open("shapes.json.gz", "wt", encoding="utf-8") as f:
+              json.dump(encoded, f)
+      
+          import os
+          print(f"shapes.json.gz: {os.path.getsize('shapes.json.gz') / 1024 / 1024:.1f} MB")
+          EOF
+          rm shapes.txt
       - name: Commit if changed
         run: |
           git config user.name "github-actions"
