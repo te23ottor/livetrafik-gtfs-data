@@ -37,6 +37,50 @@ jobs:
           print(f"shapes.json.gz: {os.path.getsize('shapes.json.gz') / 1024 / 1024:.1f} MB")
           EOF
           rm shapes.txt
+      - name: Generera area_id kolumn i stops.txt
+        run: |
+          curl -o stops_netex.zip "https://opendata.samtrafiken.se/stopsregister-netex-sweden/sweden.zip?key=${{ secrets.STOPS_KEY }}"
+          python3 << 'EOF'
+          import zipfile, re, csv
+      
+          # Bygg mappning: local GID (9021020...) -> rikshallplats ID
+          mapping = {}
+          rikshallplats_re = re.compile(r'<Key>rikshallplats</Key>\s*<Value>(\d+)</Value>')
+          local_gid_re = re.compile(r'<Key>local-gid</Key>\s*<Value>([^<]+)</Value>')
+      
+          with zipfile.ZipFile('stops_netex.zip') as z:
+              with z.open(z.namelist()[0]) as f:
+                  content = f.read().decode('utf-8')
+      
+          for sp in re.finditer(r'<StopPlace[^>]*>(.*?)</StopPlace>', content, re.DOTALL):
+              block = sp.group(1)
+              r = rikshallplats_re.search(block)
+              g = local_gid_re.search(block)
+              if r and g:
+                  area_id = r.group(1)
+                  for part in g.group(1).split('|'):
+                      ds, _, gid = part.partition(':')
+                      if ds == '20':
+                          mapping[gid] = area_id
+      
+          # Skriv om stops.txt med ny area_id kolumn
+          with open('stops.txt', 'r', encoding='utf-8') as f:
+              rows = list(csv.reader(f))
+      
+          rows[0].append('area_id')
+          for row in rows[1:]:
+              if len(row) >= 5 and row[4] == '1':
+                  row.append(mapping.get(row[0], ''))
+              else:
+                  row.append('')
+      
+          with open('stops.txt', 'w', encoding='utf-8', newline='') as f:
+              csv.writer(f).writerows(rows)
+      
+          import os
+          print(f"Mappade {sum(1 for r in rows[1:] if r[-1])} av {sum(1 for r in rows[1:] if len(r)>=5 and r[4]=='1')} stationer")
+          EOF
+          rm stops_netex.zip
       - name: Commit if changed
         run: |
           git config user.name "github-actions"
