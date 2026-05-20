@@ -39,7 +39,7 @@ jobs:
           rm shapes.txt
       - name: Generera area_id kolumn i stops.txt
         run: |
-          curl -o curl -H "Accept-Encoding: gzip" -o stops_netex.zip "https://opendata.samtrafiken.se/stopsregister-netex-sweden/sweden.zip?key=${{ secrets.STOPS_KEY }}"
+          curl -H "Accept-Encoding: gzip" -o stops_netex.zip "https://opendata.samtrafiken.se/stopsregister-netex-sweden/sweden.zip?key=${{ secrets.STOPS_KEY }}"
           python3 << 'EOF'
           import zipfile, re, csv
       
