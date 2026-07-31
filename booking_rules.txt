@@ -293,7 +293,6 @@ booking_rule_id,booking_type,prior_notice_duration_min,prior_notice_last_day,pri
 205330000133384412,1,,,,Turen ska förbeställas senast 2 timmar före bussens avgångstid från första hållplatsen via telefon 0774-44 00 00.,
 205330000133384441,1,,,,Turen ska förbeställas senast 2 timmar före bussens avgångstid från första hållplatsen via telefon 0774-44 00 00.,
 205330000133384470,1,,,,Turen ska förbeställas senast 2 timmar före bussens avgångstid från första hållplatsen via telefon 0774-44 00 00.,
-205330000133437154,1,,,,Turen ska förbeställas senast 2 timmar före bussens avgångstid från första hållplatsen via telefon 0774-44 00 00.,
 205330000133437244,1,,,,Turen ska förbeställas senast 2 timmar före bussens avgångstid från första hållplatsen via telefon 0774-44 00 00.,
 205330000133458024,1,,,,Turen ska förbeställas senast 2 timmar före bussens avgångstid från första hållplatsen via telefon 0774-44 00 00.,
 205330000133458043,1,,,,Turen ska förbeställas senast 2 timmar före bussens avgångstid från första hållplatsen via telefon 0774-44 00 00.,
